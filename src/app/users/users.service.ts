@@ -46,10 +46,10 @@ export class UsersService extends PrismaBaseService<'user'> {
   }
 
   async deleteUser(where: Prisma.UserWhereUniqueInput) {
-    // const data = await this.extended.delete({
-    //   where,
-    // });
-    const data = await this.extended.softDelete(where);
+    const data = await this.extended.delete({
+      where,
+    });
+    // const data = await this.extended.softDelete(where);
     return data;
   }
 }

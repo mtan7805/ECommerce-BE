@@ -22,35 +22,6 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
-  // @Post('export')
-  // @UseInterceptors(ExcelResponseInterceptor)
-  // async exportUsers(
-  //   @Body() exportUsersDto: ExportUsersDto,
-  //   @Res() res: Response,
-  // ) {
-  //   const workbook = await this.usersService.exportUsers(exportUsersDto);
-  //   await workbook.xlsx.write(res);
-  //   res.end();
-  //   return { message: 'Export success' };
-  // }
-
-  // @Post('import')
-  // @ImportExcel()
-  // importUsers(@UploadedFile() file: File, @User() user: UserInfo) {
-  //   return this.usersService.importUsers({ file, user });
-  // }
-
-  // @Get()
-  // getUsers(@Query() query: GetUsersPaginationDto) {
-  //   return this.usersService.getUsers(query);
-  // }
-
-  // @Get('options')
-  // @UsePipes(ParseParamsOptionPipe)
-  // getUserOptions(@Query() query: GetOptionsParams) {
-  //   return this.usersService.getOptions(query);
-  // }
-
   @Get(':id')
   getUser(@Param() { id }: IDDto, @User() user) {
     return this.usersService.getUser({ id });
