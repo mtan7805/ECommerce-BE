@@ -35,7 +35,9 @@ export class AuthGuard implements CanActivate {
       const { iat, exp, ...user } = payload;
       req['user'] = user as UserInfo;
     } catch (err) {
-      throw new UnauthorizedException(err.message);
+      if (err instanceof Error) {
+        throw new UnauthorizedException(err.message);
+      }
     }
     return true;
   }
