@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from '../../common/decorators/user.decorator';
 import { IDDto } from '../../common/dto/param.dto';
+import { GetUsersPaginationDto } from './dto/get-user.dto';
 
 @Controller('users')
 export class UsersController {

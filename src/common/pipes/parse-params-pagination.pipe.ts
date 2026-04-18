@@ -3,10 +3,6 @@ import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 @Injectable()
 export class ParseParamsPaginationPipe implements PipeTransform {
   transform(value: any, _metadata: ArgumentMetadata) {
-    if (_metadata.type !== 'query') return value;
-
-    // 🔥 bắt buộc phải có
-    if (!value) return {};
     if (value.itemPerPage) value.itemPerPage = parseInt(value.itemPerPage);
     if (value.page) {
       const page = parseInt(value.page);

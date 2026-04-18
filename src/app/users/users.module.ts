@@ -5,7 +5,7 @@ import { PaginationUtilService } from 'src/common/utils/pagination-util/paginati
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, PaginationUtilService],
+  providers: [UsersService],
   exports: [UsersService],
 })
 export class UsersModule {}
