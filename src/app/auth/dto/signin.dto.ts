@@ -1,17 +1,26 @@
 import { createZodDto } from 'nestjs-zod';
-import { UserSchema } from 'src/generated/zod';
+import { z } from 'zod';
+import { UserSchema } from '../../../generated/zod';
+import { withResponse } from '../../../common/interceptors/format-response/format-response.until';
+import { TokenKeys } from '../consts/jwt.const';
 
-const SignInSchema = UserSchema.pick({
-  email: true,
-  password: true,
-});
+const SignInSchema = UserSchema.pick({ email: true, password: true });
 
 const SignUpSchema = SignInSchema.merge(
   UserSchema.pick({ firstName: true, fullAddress: true }),
 );
 
+const SignInResponseSchema = withResponse(
+  z.object({
+    [TokenKeys.ACCESS_TOKEN_KEY]: z.string(),
+    [TokenKeys.REFRESH_TOKEN_KEY]: z.string(),
+  }),
+);
+
 class SignInDto extends createZodDto(SignInSchema) {}
+
+class SignInResponseDto extends createZodDto(SignInResponseSchema) {}
 
 class SignUpDto extends createZodDto(SignUpSchema) {}
 
-export { SignInDto, SignUpDto };
+export { SignInDto, SignInResponseDto, SignUpDto };

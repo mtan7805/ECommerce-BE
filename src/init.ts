@@ -1,7 +1,7 @@
 import { cleanupOpenApiDoc } from 'nestjs-zod';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { INestApplication, VersioningType } from '@nestjs/common';
-// import { applyMiddlewares } from './common/middlewares/common.middleware';
+import { applyMiddlewares } from './common/middleware/common.middleware';
 
 const removeFieldsAndRelations = (document: any) => {
   const otherFields = ['id', 'userID'];
@@ -76,7 +76,7 @@ const initApp = (app: INestApplication) => {
   //   header: 'x-api-version',
   //   defaultVersion: '1',
   // });
-  // applyMiddlewares(app);
+  applyMiddlewares(app);
   initOpenAPI(app);
   app.enableShutdownHooks();
   return app;

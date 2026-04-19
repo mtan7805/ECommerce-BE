@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
-    if (IS_SKIP_AUTH) {
+    if (isSkipAuth) {
       return true;
     }
     const req = context.switchToHttp().getRequest<Request>();
@@ -46,6 +46,8 @@ export class AuthGuard implements CanActivate {
     const [type, bearerToken] = req.headers.authorization?.split(' ') ?? [];
     if (type === 'Bearer') return bearerToken;
     const cookieToken = req.cookies[TokenKeys.ACCESS_TOKEN_KEY];
+    console.log('cookies:', req.cookies);
+    console.log('tokenKey:', TokenKeys.ACCESS_TOKEN_KEY);
     return cookieToken ? cookieToken : undefined;
   }
 }
