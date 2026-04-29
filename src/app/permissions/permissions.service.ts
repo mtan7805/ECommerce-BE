@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { GetOptionsParams, Options } from 'src/common/query/options.interface';
 import { PrismaBaseService } from 'src/common/services/prisma-base.service';
 import { Permission } from './entities/permission.entity';
@@ -8,6 +8,9 @@ import { QueryUtilService } from 'src/common/query-util/query-util.service';
 import { Prisma } from '@prisma/client';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
 import { GetPermissionsPaginationDto } from './dto/get-permission.dto';
+import { Actions } from 'src/common/guards/access-control/access-control.const';
+import { WithUser } from 'src/common/decorators/user.decorator';
+import { CreatePermissionDto } from './dto/create-permission.dto';
 
 @Injectable()
 export class PermissionsService
@@ -66,9 +69,27 @@ export class PermissionsService
     return data;
   }
 
-  //   private isKeyValid(key: string){
-  //     const actions = Object.values(Ac)
-  //   }
+  private isKeyValid(key: string) {
+    const actions = Object.values(Actions).join('|');
+    const regex = new RegExp(
+      `^\\[\\/[a-zA-Z0-9\\/\\-]+\\]_\\[(${actions})\\]$`,
+    );
+    return regex.test(key);
+  }
+
+  async createPermission(createPermissionDto: WithUser<CreatePermissionDto>) {
+    const isKeyValid = this.isKeyValid(createPermissionDto.key);
+    if (!isKeyValid) {
+      const actions = Object.values(Actions).join(', ');
+      throw new BadRequestException(
+        `Permission key ${createPermissionDto.key} is not valid. It must follow the pattern [/resource]_[action] where action is one of the following: ${actions}.`,
+      );
+    }
+    const data = await this.extended.create({
+      data: createPermissionDto,
+    });
+    return data;
+  }
 
   async updatePermission(params: {
     where: Prisma.PermissionWhereUniqueInput;

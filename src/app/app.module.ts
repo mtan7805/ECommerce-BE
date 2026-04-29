@@ -16,6 +16,7 @@ import { ParseParamsPaginationPipe } from 'src/common/pipes/parse-params-paginat
 import { FormatResponseInterceptor } from 'src/common/interceptors/format-response/format-response.interceptor';
 import { ApiUtilModule } from 'src/common/utils/api-util/api-util.module';
 import { PermissionsModule } from './permissions/permissions.module';
+import { AccessControlGuard } from 'src/common/guards/access-control/access-control.guard';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -58,6 +59,10 @@ import { PermissionsModule } from './permissions/permissions.module';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AccessControlGuard,
     },
   ],
 })

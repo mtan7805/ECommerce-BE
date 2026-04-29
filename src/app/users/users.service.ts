@@ -3,12 +3,16 @@ import { PrismaBaseService } from 'src/common/services/prisma-base.service';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from 'src/common/prisma/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Prisma, VendorStatus } from '@prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { isEmpty } from 'es-toolkit/compat';
-import { GetUsersPaginationDto } from './dto/get-user.dto';
+import {
+  GetUsersPaginationDto,
+  IsExistPermissionKeyDto,
+} from './dto/get-user.dto';
 import { PaginationUtilService } from 'src/common/utils/pagination-util/pagination-util.service';
 import { QueryUtilService } from 'src/common/query-util/query-util.service';
+import { Actions } from 'src/common/guards/access-control/access-control.const';
 
 @Injectable()
 export class UsersService extends PrismaBaseService<'user'> {
@@ -55,5 +59,66 @@ export class UsersService extends PrismaBaseService<'user'> {
     });
     // const data = await this.extended.softDelete(where);
     return data;
+  }
+
+  async isSupperAdmin(userID: User['id']) {
+    const data = await this.extended.findFirst({
+      where: {
+        id: userID,
+        userVendorRoles: {
+          some: {
+            role: {
+              isSystemRole: true,
+            },
+          },
+        },
+      },
+    });
+    return data ? true : false;
+  }
+
+  async isExistPermissionKey({
+    userID,
+    permissionKey,
+  }: IsExistPermissionKeyDto) {
+    const user = await this.extended.findFirst({
+      include: {
+        userVendorRoles: {
+          select: {
+            role: {
+              select: {
+                rolePermissions: {
+                  select: {
+                    permission: {
+                      select: {
+                        key: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      where: {
+        id: userID,
+        userVendorRoles: {
+          some: { status: VendorStatus.active },
+        },
+      },
+    });
+    if (!user) return false;
+
+    const [route] = permissionKey.split('_');
+    const isExistPermission = user.userVendorRoles?.some((item) =>
+      item.role?.rolePermissions?.some(
+        (rp) =>
+          rp.permission?.key?.includes(permissionKey) ||
+          rp.permission?.key?.includes(`${route}_[${Actions.MANAGE}]`),
+      ),
+    );
+
+    return isExistPermission ? true : false;
   }
 }

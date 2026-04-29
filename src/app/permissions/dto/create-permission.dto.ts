@@ -1,6 +1,6 @@
 import { createZodDto } from 'nestjs-zod';
 import { PermissionCreateInputSchema } from 'src/generated/zod';
 
-class createPermissionDto extends createZodDto(PermissionCreateInputSchema) {}
+class CreatePermissionDto extends createZodDto(PermissionCreateInputSchema) {}
 
-export { createPermissionDto };
+export { CreatePermissionDto };
