@@ -15,6 +15,7 @@ import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 import { ParseParamsPaginationPipe } from 'src/common/pipes/parse-params-pagination.pipe';
 import { FormatResponseInterceptor } from 'src/common/interceptors/format-response/format-response.interceptor';
 import { ApiUtilModule } from 'src/common/utils/api-util/api-util.module';
+import { PermissionsModule } from './permissions/permissions.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,6 +29,7 @@ import { ApiUtilModule } from 'src/common/utils/api-util/api-util.module';
     PrismaModule,
     RolesModule,
     ApiUtilModule,
+    PermissionsModule,
   ],
   controllers: [AppController],
   providers: [
