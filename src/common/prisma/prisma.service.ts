@@ -77,7 +77,6 @@ export class PrismaService
     // }
     const data: any = this.omitData(dataTransfer, ['user', 'id']);
     return data;
-    return true;
   }
 
   private generateData(data: Record<string, any>, model: string) {

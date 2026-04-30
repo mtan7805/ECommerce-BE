@@ -17,6 +17,7 @@ import { FormatResponseInterceptor } from 'src/common/interceptors/format-respon
 import { ApiUtilModule } from 'src/common/utils/api-util/api-util.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { AccessControlGuard } from 'src/common/guards/access-control/access-control.guard';
+import { RolePermissionsModule } from './role-permissions/role-permissions.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,6 +32,7 @@ import { AccessControlGuard } from 'src/common/guards/access-control/access-cont
     RolesModule,
     ApiUtilModule,
     PermissionsModule,
+    RolePermissionsModule,
   ],
   controllers: [AppController],
   providers: [
