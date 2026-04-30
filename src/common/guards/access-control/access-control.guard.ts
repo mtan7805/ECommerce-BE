@@ -12,7 +12,6 @@ import { User } from 'src/app/users/entities/user.entity';
 import { UsersService } from 'src/app/users/users.service';
 import { EnvVars } from 'src/common/envs/validate.env';
 import { RequestMethod } from 'src/common/utils/api-util/api-util.const';
-import { string } from 'zod';
 import { Actions } from './access-control.const';
 import { IS_SKIP_AUTH } from 'src/app/auth/auth.decorator';
 

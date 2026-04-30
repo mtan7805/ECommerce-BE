@@ -71,12 +71,12 @@ export class PrismaService
 
   private transferDataCreate(value, model) {
     // // const modelsWithUserID = [Vendor.name];
-    // const dataTransfer = this.setCreatedBy(value);
+    const dataTransfer = this.setCreatedBy(value);
     // if (model && modelsWithUserID.includes(model)) {
     //   dataTransfer.userID = dataTransfer.user.userID;
     // }
-    // const data: any = this.omitData(dataTransfer, ['user', 'id']);
-    // return data;
+    const data: any = this.omitData(dataTransfer, ['user', 'id']);
+    return data;
     return true;
   }
 
@@ -87,7 +87,7 @@ export class PrismaService
     //   const slug = this.stringUtilService.toSlug(data.name);
     //   return { ...data, slug };
     // }
-    // return data;
+    return data;
   }
   private parseValue(value) {
     if (isEmpty(value)) return value;
@@ -147,19 +147,19 @@ export class PrismaService
           create: ({ args, query, model }) => {
             const generateData = this.generateData(args.data, model);
             const transferData = this.transferDataCreate(generateData, model);
-            // args.data = transferData;
+            args.data = transferData;
             return query(args);
           },
           createMany: ({ args, query, model }) => {
             const generateData = this.generateData(args.data, model);
             const transferData = this.transferDataCreate(generateData, model);
-            // args.data = transferData;
+            args.data = transferData;
             return query(args);
           },
           createManyAndReturn: ({ args, query, model }) => {
             const generateData = this.generateData(args.data, model);
             const transferData = this.transferDataCreate(generateData, model);
-            // args.data = transferData;
+            args.data = transferData;
             return query(args);
           },
           update: ({ args, query }) => {
@@ -178,7 +178,7 @@ export class PrismaService
               generateCreateData,
               model,
             );
-            // args.create = transferCreateData;
+            args.create = transferCreateData;
 
             const generateUpdateData = this.generateData(args.update, model);
             const transferUpdateData = this.transferDataCreate(

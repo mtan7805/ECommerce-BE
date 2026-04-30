@@ -13,12 +13,21 @@ import { IDDto } from 'src/common/dto/param.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
 import { GetPermissionsPaginationDto } from './dto/get-permission.dto';
 import { GetOptionsParams } from 'src/common/query/options.interface';
+import { CreatePermissionDto } from './dto/create-permission.dto';
+import { User } from 'src/common/decorators/user.decorator';
+import type { UserInfo } from 'src/common/decorators/user.decorator';
 
 @Controller('permissions')
 export class PermissionsController {
   constructor(private readonly permissionsService: PermissionsService) {}
 
-  // @Post
+  @Post()
+  createPermission(
+    @Body() createDto: CreatePermissionDto,
+    @User() user: UserInfo,
+  ) {
+    return this.permissionsService.createPermission({ ...createDto, user });
+  }
 
   @Patch(':id')
   updatePermission(

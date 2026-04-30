@@ -13,7 +13,7 @@ import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { GetRolesPaginationDto } from './dto/get-role.dto';
 import { PaginationUtilService } from 'src/common/utils/pagination-util/pagination-util.service';
-import { QueryUtilService } from 'src/common/query-util/query-util.service';
+import { QueryUtilService } from 'src/common/utils/query-util/query-util.service';
 
 @Injectable()
 export class RolesService extends PrismaBaseService<'role'> implements Options {
@@ -35,8 +35,12 @@ export class RolesService extends PrismaBaseService<'role'> implements Options {
   }
 
   async createRole(createRoleDto: WithUser<CreateRoleDto>) {
+    const { user, ...rest } = createRoleDto;
     const data = await this.extended.create({
-      data: createRoleDto,
+      data: {
+        ...rest,
+        createdBy: user?.userID,
+      },
     });
     return data;
   }

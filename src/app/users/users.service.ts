@@ -11,7 +11,7 @@ import {
   IsExistPermissionKeyDto,
 } from './dto/get-user.dto';
 import { PaginationUtilService } from 'src/common/utils/pagination-util/pagination-util.service';
-import { QueryUtilService } from 'src/common/query-util/query-util.service';
+import { QueryUtilService } from 'src/common/utils/query-util/query-util.service';
 import { Actions } from 'src/common/guards/access-control/access-control.const';
 
 @Injectable()

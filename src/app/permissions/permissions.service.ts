@@ -4,7 +4,7 @@ import { PrismaBaseService } from 'src/common/services/prisma-base.service';
 import { Permission } from './entities/permission.entity';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { PaginationUtilService } from 'src/common/utils/pagination-util/pagination-util.service';
-import { QueryUtilService } from 'src/common/query-util/query-util.service';
+import { QueryUtilService } from 'src/common/utils/query-util/query-util.service';
 import { Prisma } from '@prisma/client';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
 import { GetPermissionsPaginationDto } from './dto/get-permission.dto';
