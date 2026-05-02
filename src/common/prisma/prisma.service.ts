@@ -6,15 +6,11 @@ import {
 } from '@nestjs/common';
 import { PrismaClient, Prisma } from '@prisma/client';
 import { omit } from 'es-toolkit';
-// import { Product } from '../../app/products/entities/product.entity';
-// import { Vendor } from '../../app/vendors/entities/vendor.entity';
-// import { Category } from '../../app/categories/entities/category.entity';
 import { StringUtilService } from '../utils/string-util/string-util.service';
-// import { DateUtilService } from '../utils/date-util/date-util.service';
 import { includes, isEmpty } from 'es-toolkit/compat';
 import { Decimal } from '@prisma/client/runtime/library';
 import { DateUtilService } from '../utils/date-util/date-util.service';
-// import { Vendor } from '../../app/vendors/entities/vendor.entity';
+import { Vendor } from 'src/app/vendors/entities/vendor.entity';
 @Injectable()
 export class PrismaService
   extends PrismaClient
@@ -70,22 +66,22 @@ export class PrismaService
   }
 
   private transferDataCreate(value, model) {
-    // // const modelsWithUserID = [Vendor.name];
+    const modelsWithUserID = [Vendor.name];
     const dataTransfer = this.setCreatedBy(value);
-    // if (model && modelsWithUserID.includes(model)) {
-    //   dataTransfer.userID = dataTransfer.user.userID;
-    // }
+    if (model && modelsWithUserID.includes(model)) {
+      dataTransfer.userID = dataTransfer.user.userID;
+    }
     const data: any = this.omitData(dataTransfer, ['user', 'id']);
     return data;
   }
 
   private generateData(data: Record<string, any>, model: string) {
     // const modelsGenSlug = [Product.name, Vendor.name, Category.name];
-    // const modelsGenSlug: string[] = [];
-    // if (modelsGenSlug.includes(model)) {
-    //   const slug = this.stringUtilService.toSlug(data.name);
-    //   return { ...data, slug };
-    // }
+    const modelsGenSlug: string[] = [];
+    if (modelsGenSlug.includes(model)) {
+      const slug = this.stringUtilService.toSlug(data.name);
+      return { ...data, slug };
+    }
     return data;
   }
   private parseValue(value) {
