@@ -18,6 +18,7 @@ import { PermissionsModule } from './permissions/permissions.module';
 import { AccessControlGuard } from 'src/common/guards/access-control/access-control.guard';
 import { RolePermissionsModule } from './role-permissions/role-permissions.module';
 import { VendorsModule } from './vendors/vendors.module';
+import { UserVendorRolesModule } from './user-vendor-roles/user-vendor-roles.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -34,6 +35,7 @@ import { VendorsModule } from './vendors/vendors.module';
     PermissionsModule,
     RolePermissionsModule,
     VendorsModule,
+    UserVendorRolesModule,
   ],
   controllers: [AppController],
   providers: [
