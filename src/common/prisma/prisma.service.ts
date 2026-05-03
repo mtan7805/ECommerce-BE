@@ -237,18 +237,18 @@ export class PrismaService
           },
         },
       },
-      // result: {
-      //   $allModels: {
-      //     createdAt: {
-      //       compute: ({ createdAt }) =>
-      //         this.dateUtilService.formatDate(createdAt),
-      //     },
-      //     updatedAt: {
-      //       compute: ({ updatedAt }) =>
-      //         this.dateUtilService.formatDate(updatedAt),
-      //     },
-      //   },
-      // },
+      result: {
+        $allModels: {
+          createdAt: {
+            compute: ({ createdAt }) =>
+              this.dateUtilService.formatDate(createdAt),
+          },
+          updatedAt: {
+            compute: ({ updatedAt }) =>
+              this.dateUtilService.formatDate(updatedAt),
+          },
+        },
+      },
     });
     // Prisma Client => Custom thêm một vài logic khác: Prisma Client + Prisma Custom
     this._extended = extended;

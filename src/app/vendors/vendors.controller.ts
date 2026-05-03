@@ -47,7 +47,7 @@ export class VendorsController {
     return this.vendorService.getVendor({ id });
   }
 
-  @Get()
+  @Get(':options')
   getVendorOptions(@Query() query: GetOptionsParams) {
     return this.vendorService.getOptions(query);
   }

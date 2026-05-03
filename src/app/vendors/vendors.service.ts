@@ -53,6 +53,7 @@ export class VendorsService extends PrismaBaseService<'vendor'> {
     });
     const fieldsSelect =
       this.queryUtilService.convertFieldsSelectOption<Vendor>(select);
+    console.log(fieldsSelect, 'fieldsSelect');
     const searchQuery = this.queryUtilService.buildSearchQuery<Vendor>({
       search,
     });
